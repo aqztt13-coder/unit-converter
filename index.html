@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>محوّل الوحدات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f5;--card:#fff;--ink:#12263a;--mute:#5b6b7a;--line:#d8e0e6;--accent:#0b8f80;--accent-ink:#fff;--soft:#e3f4f1;--hero:#12263a;--hero-ink:#fff;--warm:#f2a93b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1620;--card:#15222f;--ink:#e8eef3;--mute:#93a4b3;--line:#263747;--accent:#2fc4b2;--accent-ink:#06211d;--soft:#16342f;--hero:#0a121a;--hero-ink:#e8eef3}}
+:root[data-theme="dark"]{--bg:#0d1620;--card:#15222f;--ink:#e8eef3;--mute:#93a4b3;--line:#263747;--accent:#2fc4b2;--accent-ink:#06211d;--soft:#16342f;--hero:#0a121a;--hero-ink:#e8eef3}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;line-height:1.7}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--warm);outline-offset:2px}
+.hero{background:var(--hero);color:var(--hero-ink);padding:28px 20px 76px}
+.wrap{max-width:880px;margin:0 auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{margin:0;font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:700;line-height:1.3}
+.sub{margin:6px 0 0;color:#a9bccb;font-size:1rem}
+.theme{border:1px solid #ffffff44;background:transparent;color:inherit;border-radius:999px;padding:8px 16px;cursor:pointer;transition:background .2s}
+.theme:hover{background:#ffffff1f}
+main{margin-top:-52px;padding:0 16px 40px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:thin}
+.tab{flex:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:9px 18px;cursor:pointer;font-weight:500;transition:transform .15s,background .2s,color .2s}
+.tab:hover{transform:translateY(-2px)}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 30px #12263a1a}
+.conv{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:end}
+.field label{display:block;font-size:.9rem;color:var(--mute);margin-bottom:6px}
+.field input,.field select{width:100%;height:54px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);padding:0 14px;font-size:1.1rem}
+.field input{direction:ltr;text-align:left;font-weight:700;font-size:1.35rem}
+.field input:focus,.field select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--soft)}
+.field select{margin-top:8px;cursor:pointer}
+.out input{background:var(--soft);border-color:transparent}
+.swap{width:54px;height:54px;border-radius:50%;border:none;background:var(--warm);color:#2a1c00;font-size:1.5rem;cursor:pointer;margin-bottom:62px;transition:transform .35s}
+.swap:hover{transform:rotate(180deg)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+.btn{border:none;border-radius:12px;padding:11px 20px;cursor:pointer;font-weight:700;background:var(--accent);color:var(--accent-ink);transition:filter .2s}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.formula{margin-inline-start:auto;color:var(--mute);direction:ltr;font-size:.95rem}
+h2{font-size:1.2rem;margin:28px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;cursor:pointer;transition:border-color .2s,background .2s}
+.item:hover{border-color:var(--accent);background:var(--soft)}
+.item small{display:block;color:var(--mute)}
+.item b{display:block;direction:ltr;text-align:right;font-size:1.1rem;overflow-wrap:anywhere}
+.toast{position:fixed;inset-inline:0;bottom:calc(24px + env(safe-area-inset-bottom,0px));margin:auto;width:max-content;max-width:90%;background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:12px;opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+footer{text-align:center;color:var(--mute);font-size:.9rem;padding:0 16px 28px}
+@media (max-width:640px){.conv{grid-template-columns:1fr}.swap{margin:0 auto;transform:rotate(90deg)}.swap:hover{transform:rotate(270deg)}.formula{margin:0;width:100%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="top"><div><h1>محوّل الوحدات</h1><p class="sub">حوّل بين الطول والمساحة والحجم والوزن والحرارة وأكثر، فورياً.</p></div>
+  <button class="theme" id="theme" type="button">الوضع الداكن</button></div>
+</div></header>
+<main><div class="wrap">
+  <div class="tabs" id="tabs" role="tablist" aria-label="نوع الوحدة"></div>
+  <section class="card" aria-live="polite">
+    <div class="conv">
+      <div class="field"><label for="v1">القيمة</label><input id="v1" type="text" inputmode="decimal" value="1" autocomplete="off"><select id="u1" aria-label="من وحدة"></select></div>
+      <button class="swap" id="swap" type="button" aria-label="تبديل الوحدتين">⇄</button>
+      <div class="field out"><label for="v2">النتيجة</label><input id="v2" type="text" readonly><select id="u2" aria-label="إلى وحدة"></select></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="copy" type="button">نسخ النتيجة</button>
+      <button class="btn ghost" id="clear" type="button">مسح</button>
+      <span class="formula" id="formula"></span>
+    </div>
+  </section>
+  <h2>التحويل إلى كل الوحدات</h2>
+  <div class="grid" id="all"></div>
+</div></main>
+<footer>اضغط على أي وحدة في الأسفل لاختيارها كوحدة الهدف.</footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const D={
+length:{n:"الطول",u:{mm:["مليمتر",.001],cm:["سنتيمتر",.01],m:["متر",1],km:["كيلومتر",1000],in:["إنش",.0254],ft:["قدم",.3048],yd:["ياردة",.9144],mi:["ميل",1609.344],nmi:["ميل بحري",1852]},d:["km","mi"]},
+area:{n:"المساحة",u:{mm2:["مليمتر مربع",1e-6],cm2:["سنتيمتر مربع",1e-4],m2:["متر مربع",1],ha:["هكتار",1e4],km2:["كيلومتر مربع",1e6],dunam:["دونم (عراقي)",2500],acre:["فدان إنجليزي (أكر)",4046.8564224],ft2:["قدم مربعة",.09290304],yd2:["ياردة مربعة",.83612736],mi2:["ميل مربع",2589988.110336]},d:["m2","dunam"]},
+volume:{n:"الحجم",u:{ml:["مليلتر",.001],l:["لتر",1],m3:["متر مكعب",1000],tsp:["ملعقة صغيرة",.00492892],tbsp:["ملعقة كبيرة",.0147868],cup:["كوب أمريكي",.2365882],pt:["باينت",.473176],gal:["غالون أمريكي",3.785411784],ft3:["قدم مكعبة",28.316846592]},d:["l","gal"]},
+weight:{n:"الوزن",u:{mg:["مليغرام",1e-6],g:["غرام",.001],kg:["كيلوغرام",1],t:["طن",1000],oz:["أونصة",.028349523125],lb:["رطل (باوند)",.45359237],st:["ستون",6.35029318]},d:["kg","lb"]},
+temp:{n:"الحرارة",u:{c:["سلسيوس °C"],f:["فهرنهايت °F"],k:["كلفن K"]},d:["c","f"]},
+pressure:{n:"الضغط",u:{pa:["باسكال",1],kpa:["كيلوباسكال",1e3],bar:["بار",1e5],mbar:["ميلي بار",100],atm:["ضغط جوي",101325],psi:["PSI",6894.757293],mmhg:["مم زئبق",133.322387]},d:["bar","psi"]},
+speed:{n:"السرعة",u:{ms:["متر/ثانية",1],kmh:["كم/ساعة",1/3.6],mph:["ميل/ساعة",.44704],kn:["عقدة",.514444],fts:["قدم/ثانية",.3048]},d:["kmh","mph"]},
+time:{n:"الزمن",u:{ms:["مللي ثانية",.001],s:["ثانية",1],min:["دقيقة",60],h:["ساعة",3600],d:["يوم",86400],w:["أسبوع",604800],mo:["شهر (متوسط)",2629800],y:["سنة",31557600]},d:["h","min"]},
+data:{n:"البيانات",u:{bit:["بت",.125],B:["بايت",1],KB:["كيلوبايت",1024],MB:["ميغابايت",1048576],GB:["غيغابايت",1073741824],TB:["تيرابايت",1099511627776]},d:["GB","MB"]},
+energy:{n:"الطاقة",u:{j:["جول",1],kj:["كيلوجول",1000],cal:["سعرة",4.184],kcal:["كيلو سعرة",4184],wh:["واط ساعة",3600],kwh:["كيلوواط ساعة",3.6e6],btu:["BTU",1055.056]},d:["kcal","kj"]},
+angle:{n:"الزاوية",u:{deg:["درجة",1],rad:["راديان",180/Math.PI],grad:["غراد",.9],turn:["دورة كاملة",360]},d:["deg","rad"]}
+};
+const $=id=>document.getElementById(id);
+let cat="length";
+function toBase(c,u,v){if(c==="temp")return u==="c"?v:u==="f"?(v-32)*5/9:v-273.15;return v*D[c].u[u][1]}
+function fromBase(c,u,v){if(c==="temp")return u==="c"?v:u==="f"?v*9/5+32:v+273.15;return v/D[c].u[u][1]}
+function conv(c,a,b,v){return fromBase(c,b,toBase(c,a,v))}
+function fmt(x){if(!isFinite(x))return"—";if(x===0)return"0";const a=Math.abs(x);
+ if(a>=1e15||a<1e-9)return x.toExponential(6).replace(/\.?0+e/,"e");
+ return Number(x.toPrecision(10)).toLocaleString("en-US",{maximumFractionDigits:10,useGrouping:false})}
+function parse(s){const n=parseFloat(String(s).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/٫/g,".").replace(/,/g,""));return n}
+function fill(sel,c,val){sel.innerHTML=Object.entries(D[c].u).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join("");sel.value=val}
+function setCat(c){cat=c;fill($("u1"),c,D[c].d[0]);fill($("u2"),c,D[c].d[1]);$("v1").value="1";
+ document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.c===c));update()}
+function update(){const v=parse($("v1").value),a=$("u1").value,b=$("u2").value;
+ if(isNaN(v)){$("v2").value="";$("all").innerHTML="";$("formula").textContent="";return}
+ $("v2").value=fmt(conv(cat,a,b,v));
+ if(cat==="temp")$("formula").textContent=`${fmt(v)} ${D[cat].u[a][0].split(" ").pop()} = ${$("v2").value} ${D[cat].u[b][0].split(" ").pop()}`;
+ else $("formula").textContent=`1 ${D[cat].u[a][0]} = ${fmt(conv(cat,a,b,1))} ${D[cat].u[b][0]}`;
+ $("all").innerHTML=Object.entries(D[cat].u).map(([k,u])=>`<button class="item" type="button" data-u="${k}"><small>${u[0]}</small><b>${fmt(conv(cat,a,k,v))}</b></button>`).join("")}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),1600)}
+$("tabs").innerHTML=Object.entries(D).map(([k,v])=>`<button class="tab" role="tab" data-c="${k}">${v.n}</button>`).join("");
+$("tabs").onclick=e=>{const t=e.target.closest(".tab");if(t)setCat(t.dataset.c)};
+$("v1").oninput=update;$("u1").onchange=update;$("u2").onchange=update;
+$("swap").onclick=()=>{const a=$("u1").value;$("u1").value=$("u2").value;$("u2").value=a;update()};
+$("clear").onclick=()=>{$("v1").value="";update();$("v1").focus()};
+$("copy").onclick=async()=>{const t=$("v2").value;if(!t)return;
+ try{await navigator.clipboard.writeText(t);toast("تم نسخ النتيجة")}catch(e){$("v2").select();document.execCommand("copy");toast("تم نسخ النتيجة")}};
+$("all").onclick=e=>{const i=e.target.closest(".item");if(i){$("u2").value=i.dataset.u;update()}};
+$("theme").onclick=()=>{const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue("--bg").trim()==="#0d1620";
+ r.dataset.theme=dark?"light":"dark";$("theme").textContent=dark?"الوضع الداكن":"الوضع الفاتح"};
+if(matchMedia("(prefers-color-scheme:dark)").matches)$("theme").textContent="الوضع الفاتح";
+setCat("length");
+</script>
+</body>
+</html>
